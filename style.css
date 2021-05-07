@@ -1,0 +1,147 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --cell-size: 100px;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+
+body {
+  margin: 0;
+}
+
+.game-board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: center;
+  align-content: center;
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n-2) {
+  border-left: none;
+}
+
+.cell:nth-child(3n) {
+  border-right: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+  border-bottom: none;
+}
+
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.cell.x::before,
+.cell.x::after,
+.cell.circle::before {
+  background-color: black;
+}
+
+.game-board.x .cell:not(.x):not(.circle):hover::before,
+.game-board.x .cell:not(.x):not(.circle):hover::after,
+.game-board.circle .cell:not(.x):not(.circle):hover::before {
+  background-color: lightgray;
+}
+
+.cell.x::before,
+.cell.x::after,
+.game-board.x .cell:not(.x):not(.circle):hover::before,
+.game-board.x .cell:not(.x):not(.circle):hover::after {
+  position: absolute;
+  content: '';
+  height: var(--mark-size);
+  width: calc(var(--mark-size) * 0.1);
+}
+
+.cell.x::before,
+.game-board.x .cell:not(.x):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.cell.x::after,
+.game-board.x .cell:not(.x):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.game-board.circle .cell:not(.x):not(.circle):hover::before,
+.game-board.circle .cell:not(.x):not(.circle):hover::after {
+  position: absolute;
+  content: '';
+  border: none;
+  border-radius: 50%;
+}
+
+.cell.circle::before,
+.game-board.circle .cell:not(.x):not(.circle):hover::before {
+  height: var(--mark-size);
+  width: var(--mark-size);
+}
+
+.cell.circle::after,
+.game-board.circle .cell:not(.x):not(.circle):hover::after {
+  height: calc(var(--mark-size) * 0.8);
+  width: calc(var(--mark-size) * 0.8);
+  background-color: white;
+}
+
+.result {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+.result button {
+  font-size: 3rem;
+  padding: 0.5rem 2rem;
+  border: 2px solid white;
+  background-color: white;
+  outline: none;
+}
+
+.result button:hover,
+.result button:focus {
+  background-color: black;
+  color: white;
+}
+
+.result.show {
+  display: flex;
+}
